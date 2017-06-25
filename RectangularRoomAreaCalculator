@@ -1,0 +1,71 @@
+// 0. Documentation
+//		Purpose:          To calculate the area of rectangular rooms
+//		Author:           Ricardo Morocz
+//    Date:             06/25/2017
+//    Acknowledgement:  Work based on the code developed by Ramesh Yerraballi & Jon Valvano (01/15/16)  
+//                      as part of the UT Austin's Embedded Systems online course Lab 5
+//    Notes:            main.c
+//     										Runs on TM4C123
+//     										UART runs at 115,200 baud rate 
+//     										Daniel Valvano
+//     										June 17, 2013
+// 											Lab 5
+//      									Jon Valvano and Ramesh Yerraballi
+//      									January 15, 2016
+//---------------------------------------------------------------------------------------
+// 1. Pre-Processor Directives
+#include <stdio.h>   // standard C library 
+#include "uart.h"    // functions to implement input/output
+#include "TExaS.h"   // Lab grader functions
+//---------------------------------------------------------------------------------------
+// 2. Global Declarations
+//		A. Global Variables
+
+//    B. Function Prototypes
+unsigned long Calc_Area(unsigned long l, unsigned long w); 
+void EnableInterrupts(void);  // Enable interrupts
+//---------------------------------------------------------------------------------------
+// 3. Functions/Subroutines
+
+// main: Mandatory routine for the C program to be executable
+// Inputs:  none
+// Outputs: none
+// Notes:   none
+int main (void) {
+  unsigned long length, width, area;     // Initialize the parameters length, width, and area
+  
+	TExaS_Init(UART_PIN_PA0,UART_PIN_PA1); // Initializes TExaS Grader Lab 5
+  UART_Init();                           // Initializes UART for printing
+  EnableInterrupts();                    // The grader needs interrupts
+	
+	printf("\nThis program calculates areas of rectangular rooms.\n");
+	
+  while(1) {
+    printf("\nGive length: "); 
+		scanf("%ld", &length);               // Get input length in m
+    printf("\nGive width: ");  
+		scanf("%ld", &width);                // Get input width in m
+    area = Calc_Area(length, width);
+    printf("\nArea of the room = %ld\n",  area);
+  }
+}
+
+// Calc_Area: Calculates the Area of a rectangular room given its width and length
+// Input:  Length (l) and Width (w) in meters
+// Output: Area of the room in squared meters 
+// Notes:  Return a result of zero if 
+//    		   - the length is less than 3,  
+//           - the width is less than 3,  
+//           - the length is greater than 20 or  
+//           - the width is greater than 20. 
+unsigned long Calc_Area(unsigned long l, unsigned long w) {
+  unsigned long result;
+	
+	if(((l>=3)&&(l<=20))&&((w>=3)&&(w<=20))){
+		result = l*w;  //Area calculation
+	}else{
+		return(0);
+	}
+	
+  return(result);
+}
