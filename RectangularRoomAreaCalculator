@@ -32,19 +32,19 @@ void EnableInterrupts(void);  // Enable interrupts
 // Outputs: none
 // Notes:   none
 int main (void) {
+
   unsigned long length, width, area;     // Initialize the parameters length, width, and area
-  
-	TExaS_Init(UART_PIN_PA0,UART_PIN_PA1); // Initializes TExaS Grader Lab 5
+  TExaS_Init(UART_PIN_PA0,UART_PIN_PA1); // Initializes TExaS Grader Lab 5
   UART_Init();                           // Initializes UART for printing
   EnableInterrupts();                    // The grader needs interrupts
-	
+  
 	printf("\nThis program calculates areas of rectangular rooms.\n");
 	
   while(1) {
     printf("\nGive length: "); 
-		scanf("%ld", &length);               // Get input length in m
+    scanf("%ld", &length);               // Get input length in m
     printf("\nGive width: ");  
-		scanf("%ld", &width);                // Get input width in m
+    scanf("%ld", &width);                // Get input width in m
     area = Calc_Area(length, width);
     printf("\nArea of the room = %ld\n",  area);
   }
